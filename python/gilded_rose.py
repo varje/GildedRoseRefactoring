@@ -8,6 +8,7 @@ class GildedRose(object):
     # better function name would be daily_update
     def update_quality(self):
         # define variables instead of direct text
+        # simplification: using direct strings; in real project would take in account spaces, tabs, capital letters etc
         brie = "Aged Brie"
         backstage_passes = "Backstage passes to a TAFKAL80ETC concert"
         sulfuras = "Sulfuras, Hand of Ragnaros"
@@ -20,7 +21,7 @@ class GildedRose(object):
             item.quality -= points
 
         def increase_quality(item, points):
-            item.quality -= points
+            item.quality += points
 
         def backstage_passes_update(item):
             # "Backstage passes", like aged brie, increases in Quality as it's SellIn value approaches;
@@ -40,8 +41,11 @@ class GildedRose(object):
                 # The Quality of an item is never negative
                 # although item quality can not go below 0, this is to catch items which start with below 0 quality
                 item.quality = 0
-            elif item.quality >= 50 or item == sulfuras:
+            elif item.quality >= 50:
                 # The Quality of an item is never more than 50
+                # although item quality can not go above 50, this is to catch items which start with above 50 quality
+                item.quality = 50
+            elif item == sulfuras:
                 # "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
                 pass
             elif item.name == brie:

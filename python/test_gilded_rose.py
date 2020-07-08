@@ -17,6 +17,7 @@ class GildedRoseTest(unittest.TestCase):
     def setUp(self):
         vest = "+5 Dexterity Vest"
         elixir = "Elixir of the Mongoose"
+        brie = "Aged Brie"
         mock_normal_items = [
             Item(name=vest, sell_in=10, quality=20),
             Item(name=elixir, sell_in=5, quality=7)
@@ -37,6 +38,16 @@ class GildedRoseTest(unittest.TestCase):
             Item(name=elixir, sell_in=-2, quality=-10)
         ]
 
+        mock_quality_50_or_above = [
+            Item(name=vest, sell_in=10, quality=50),
+            Item(name=elixir, sell_in=102, quality=110)
+        ]
+
+        mock_aged_brie = [
+            Item(name=brie, sell_in=10, quality=20),
+            Item(name=elixir, sell_in=-10, quality=100)
+        ]
+
 
 
 
@@ -53,6 +64,8 @@ class GildedRoseTest(unittest.TestCase):
         self.mock_normal_items = mock_normal_items
         self.mock_sellin_passed_items = mock_sellin_passed_items
         self.mock_quality_negative_or_0 = mock_quality_negative_or_0
+        self.mock_quality_50_or_above = mock_quality_50_or_above
+        self.mock_aged_brie = mock_aged_brie
 
     def test_foo(self):
         items = [Item("foo", 0, 0)]
@@ -84,11 +97,16 @@ class GildedRoseTest(unittest.TestCase):
         updated_items = help_for_creating_data(original_items)
         self.assertEqual([0, 0], ([item.quality for item in updated_items]))
 
-    def test_Aged_Brie_quality_increase_each_day(self):
-        pass
-
     def test_quality_is_never_over_50(self):
-        pass
+        original_items = self.mock_quality_50_or_above
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual([50, 50], ([item.quality for item in updated_items]))
+
+    def test_Aged_Brie_quality_increase_each_day_but_is_not_over_50(self):
+        original_items = self.mock_aged_brie
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(([21, 50]), ([item.quality for item in updated_items]))
+
 
     def test_Sulfuras_does_not_degrade_in_quality_nor_selling_time(self):
         pass
