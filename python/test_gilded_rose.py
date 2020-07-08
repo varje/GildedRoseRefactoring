@@ -18,6 +18,7 @@ class GildedRoseTest(unittest.TestCase):
         vest = "+5 Dexterity Vest"
         elixir = "Elixir of the Mongoose"
         brie = "Aged Brie"
+        sulfuras = "Sulfuras, Hand of Ragnaros"
         mock_normal_items = [
             Item(name=vest, sell_in=10, quality=20),
             Item(name=elixir, sell_in=5, quality=7)
@@ -49,14 +50,15 @@ class GildedRoseTest(unittest.TestCase):
         ]
 
         mock_sulfuras = [
-            Item(name="Sulfuras, Hand of Ragnaros", sell_in=100, quality= -20),
-            Item(name="Sulfuras, Hand of Ragnaros", sell_in=-100, quality=80)
+            Item(name=sulfuras, sell_in=100, quality= 20),
+            Item(name=sulfuras, sell_in=-100, quality=80)
         ]
 
         mock_backstage = [
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=10),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=10),
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=10),
+            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=0, quality=10),
         ]
 
 
@@ -116,11 +118,15 @@ class GildedRoseTest(unittest.TestCase):
         updated_items = help_for_creating_data(original_items)
         self.assertEqual(([21, 50]), ([item.quality for item in updated_items]))
 
-
-    def test_Sulfuras_does_not_degrade_in_quality_nor_selling_time(self):
+    def test_Sulfuras_does_not_degrade_in_quality_but_qality_can_not_be_over_50(self):
         original_items = self.mock_sulfuras
         updated_items = help_for_creating_data(original_items)
-        self.assertEqual(([item.quality for item in updated_items]), ([item.quality for item in updated_items]))
+        self.assertEqual(([20, 50]), ([item.quality for item in updated_items]))
+
+    def test_Sulfuras_sellin_time_does_not_change(self):
+        original_items = self.mock_sulfuras
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(([item.sell_in for item in original_items]), ([item.sell_in for item in updated_items]))
 
     def test_Backstage_passes_quality_increases_in_time(self):
         original_items = self.mock_backstage
@@ -128,13 +134,19 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(11, (updated_items[0].quality))
 
     def test_Backstage_passes_quality_increases_by_2_when_time_is_equal_or_smaller_than_10_days(self):
-        pass
+        original_items = self.mock_backstage
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(12, (updated_items[1].quality))
 
     def test_Backstage_passes_quality_increases_by_3_when_time_is_equal_or_smaller_than_5_days(self):
-        pass
+        original_items = self.mock_backstage
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(13, (updated_items[2].quality))
 
     def test_Backstage_passes_quality_drops_to_0_after_the_concert(self):
-        pass
+        original_items = self.mock_backstage
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(0, (updated_items[3].quality))
 
     def test_Conjured_items_degrade_Quality_twice_as_fast(self):
         pass
