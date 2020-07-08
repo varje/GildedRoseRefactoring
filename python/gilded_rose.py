@@ -11,9 +11,6 @@ class GildedRose(object):
         brie = "Aged Brie"
         backstage_passes = "Backstage passes to a TAFKAL80ETC concert"
         sulfuras = "Sulfuras, Hand of Ragnaros"
-        # will just use direct strings; in real project would use extra property "Conjured"/"Backstage passes" 
-        # as by task description can understand that might be eg. "Conjured Aged Brie"
-        conjured = "Conjured"
 
         # help functions
         def decrease_sellin_days(item):
@@ -42,18 +39,20 @@ class GildedRose(object):
             if item.quality <= 0:
                 # The Quality of an item is never negative
                 # although item quality can not go below 0, this is to catch items which start with below 0 quality
-                item.quality == 0
+                item.quality = 0
             elif item.quality >= 50 or item == sulfuras:
                 # The Quality of an item is never more than 50
                 # "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
                 pass
-            elif item == brie:
+            elif item.name == brie:
                 # "Aged Brie" actually increases in Quality the older it gets
                 increase_quality(item, 1)
-            elif item == backstage_passes:
+            elif item.name.startswith("Backstage passes"):
+                # simplification: using startswith with exact string; real project would handle spaces-tabs, capital letters etc.
                 # as backstage_passes have quite complicated rules, will make subfunction
                 backstage_passes_update(item)
-            elif item == conjured:
+            elif item.name.startswith("Conjured"):
+                # simplification: using startswith with exact string; real project would handle spaces-tabs, capital letters etc.
                 # "Conjured" items degrade in Quality twice as fast as normal items
                 decrease_quality(item, 2)
             elif item.sell_in < 0:
