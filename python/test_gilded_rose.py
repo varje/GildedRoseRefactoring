@@ -48,24 +48,33 @@ class GildedRoseTest(unittest.TestCase):
             Item(name=elixir, sell_in=-10, quality=100)
         ]
 
+        mock_sulfuras = [
+            Item(name="Sulfuras, Hand of Ragnaros", sell_in=100, quality= -20),
+            Item(name="Sulfuras, Hand of Ragnaros", sell_in=-100, quality=80)
+        ]
+
+        mock_backstage = [
+            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=10),
+            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=10),
+            Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=10),
+        ]
 
 
 
 
-        #   Item(name="Superbad noodle sword", sell_in=0, quality= -20) 
-        #     Item(name="Sulfuras, Hand of Ragnaros", sell_in=0, quality=80),
+       
         #     Item(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80),
         # Item(name="Aged Brie", sell_in=2, quality=0),
         # Item(name="Conjured Mana Cake", sell_in=3, quality=6)
             
-        #     Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=15, quality=20),
-        #     Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=10, quality=49),
-        #     Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=5, quality=49),
+
         self.mock_normal_items = mock_normal_items
         self.mock_sellin_passed_items = mock_sellin_passed_items
         self.mock_quality_negative_or_0 = mock_quality_negative_or_0
         self.mock_quality_50_or_above = mock_quality_50_or_above
         self.mock_aged_brie = mock_aged_brie
+        self.mock_sulfuras = mock_sulfuras
+        self.mock_backstage = mock_backstage
 
     def test_foo(self):
         items = [Item("foo", 0, 0)]
@@ -109,10 +118,14 @@ class GildedRoseTest(unittest.TestCase):
 
 
     def test_Sulfuras_does_not_degrade_in_quality_nor_selling_time(self):
-        pass
+        original_items = self.mock_sulfuras
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(([item.quality for item in updated_items]), ([item.quality for item in updated_items]))
 
     def test_Backstage_passes_quality_increases_in_time(self):
-        pass
+        original_items = self.mock_backstage
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(11, (updated_items[0].quality))
 
     def test_Backstage_passes_quality_increases_by_2_when_time_is_equal_or_smaller_than_10_days(self):
         pass

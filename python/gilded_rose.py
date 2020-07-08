@@ -10,7 +10,6 @@ class GildedRose(object):
         # define variables instead of direct text
         # simplification: using direct strings; in real project would take in account spaces, tabs, capital letters etc
         brie = "Aged Brie"
-        backstage_passes = "Backstage passes to a TAFKAL80ETC concert"
         sulfuras = "Sulfuras, Hand of Ragnaros"
 
         # help functions
