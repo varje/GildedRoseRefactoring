@@ -111,7 +111,7 @@ class GildedRoseTest(unittest.TestCase):
         updated_items = help_for_creating_data(original_items)
         self.assertEqual([50, 50], ([item.quality for item in updated_items]))
 
-    def test_Aged_Brie_quality_increase_each_day_but_is_not_over_50(self):
+    def test_Aged_Brie_quality_increases_each_day_but_is_not_over_50(self):
         original_items = self.mock_aged_brie
         updated_items = help_for_creating_data(original_items)
         self.assertEqual(([21, 50]), ([item.quality for item in updated_items]))

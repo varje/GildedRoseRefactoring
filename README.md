@@ -11,7 +11,7 @@ python -m unittest
 ### Main requirements:
 1. All items have a SellIn value which denotes the number of days we have to sell the item
 1. All items have a Quality value which denotes how valuable the item is
-1. At the end of each day our system lowers both values for every item
+1. At the end of each day system lowers both values for every item
 
 #### Exceptions:
 
