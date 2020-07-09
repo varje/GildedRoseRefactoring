@@ -61,13 +61,10 @@ class GildedRoseTest(unittest.TestCase):
             Item(name="Backstage passes to a TAFKAL80ETC concert", sell_in=0, quality=10),
         ]
 
-
-
-
-       
-        #     Item(name="Sulfuras, Hand of Ragnaros", sell_in=-1, quality=80),
-        # Item(name="Aged Brie", sell_in=2, quality=0),
-        # Item(name="Conjured Mana Cake", sell_in=3, quality=6)
+        mock_conjured = [
+            Item(name="Conjured Mana Cake", sell_in=3, quality=6),
+            Item(name="Conjured Magic Sword", sell_in=13, quality=16)
+        ]
             
 
         self.mock_normal_items = mock_normal_items
@@ -77,6 +74,7 @@ class GildedRoseTest(unittest.TestCase):
         self.mock_aged_brie = mock_aged_brie
         self.mock_sulfuras = mock_sulfuras
         self.mock_backstage = mock_backstage
+        self.mock_conjured = mock_conjured
 
     def test_foo(self):
         items = [Item("foo", 0, 0)]
@@ -118,10 +116,10 @@ class GildedRoseTest(unittest.TestCase):
         updated_items = help_for_creating_data(original_items)
         self.assertEqual(([21, 50]), ([item.quality for item in updated_items]))
 
-    def test_Sulfuras_does_not_degrade_in_quality_but_qality_can_not_be_over_50(self):
+    def test_Sulfuras_does_not_degrade_in_even_if_it_is_over_50(self):
         original_items = self.mock_sulfuras
         updated_items = help_for_creating_data(original_items)
-        self.assertEqual(([20, 50]), ([item.quality for item in updated_items]))
+        self.assertEqual(([item.quality for item in original_items]), ([item.quality for item in updated_items]))
 
     def test_Sulfuras_sellin_time_does_not_change(self):
         original_items = self.mock_sulfuras
@@ -149,10 +147,9 @@ class GildedRoseTest(unittest.TestCase):
         self.assertEqual(0, (updated_items[3].quality))
 
     def test_Conjured_items_degrade_Quality_twice_as_fast(self):
-        pass
-
-    def test_items_except_Sulfuras_can_not_have_quality_above_50(self):
-        pass
+        original_items = self.mock_conjured
+        updated_items = help_for_creating_data(original_items)
+        self.assertEqual(([item.quality-2 for item in original_items]), ([item.quality for item in updated_items]))
 
 if __name__ == '__main__':
     unittest.main()
