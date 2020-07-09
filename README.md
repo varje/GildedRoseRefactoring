@@ -1,11 +1,33 @@
+# Gilded Rose Refactoring Kata
+### This repository is cloned from @emilybache GildedRose
+### Only includes python code with refactoring and unittests
 
-# This repository is cloned from @emilybache GildedRose and refactored by GildedRoseRequirements
-## Running tests:
-cd python
+# Running tests:
+cd python  
 python -m unittest
 
+# Requirements:
+
+### Main requirements:
+1. All items have a SellIn value which denotes the number of days we have to sell the item
+1. All items have a Quality value which denotes how valuable the item is
+1. At the end of each day our system lowers both values for every item
+
+#### Exceptions:
+
+1. Once the sell by date has passed, Quality degrades twice as fast  
+1. The Quality of an item is never negative  
+1. "Aged Brie" actually increases in Quality the older it gets  
+1. The Quality of an item is never more than 50
+1. "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
+1. "Backstage passes", like aged brie, increases in Quality as it's SellIn value approaches; Quality increases by 2 when there are 10 days or less and by 3 when there are 5 days or less but Quality drops to 0 after the concert
+1. "Conjured" items degrade in Quality twice as fast as normal items
+1. Do not alter the Item class or Items property as those belong to the goblin in the corner who will insta-rage and one-shot you as he doesn't believe in shared code ownership (you can make the UpdateQuality method and Items property static if you like, we'll cover for you).
+1. An item can never have its Quality increase above 50, however "Sulfuras" is a legendary item and as such its Quality is 80 and it never alters.
+
+
 # ReadMe from @emilybache repository:
-# Gilded Rose Refactoring Kata
+## Gilded Rose Refactoring Kata
 
 This Kata was originally created by Terry Hughes (http://twitter.com/TerryHughes). It is already on GitHub [here](https://github.com/NotMyself/GildedRose). See also [Bobby Johnson's description of the kata](http://iamnotmyself.com/2011/02/13/refactor-this-the-gilded-rose-kata/).
 
