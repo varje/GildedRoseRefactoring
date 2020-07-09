@@ -35,9 +35,6 @@ def change_quality(item):
         # The Quality of an item is never more than 50
         # although item quality can not go above 50, this is to catch items which start with above 50 quality
         item.quality = 50
-    elif item.name == sulfuras:
-        # "Sulfuras", being a legendary item, never has to be sold or decreases in Quality
-        item.quality = item.quality
     elif item.name == brie:
         # "Aged Brie" actually increases in Quality the older it gets
         increase_quality(item, 1)
